@@ -6,21 +6,38 @@ const connectDB = require("./config/dbConn");
 
 // make an app
 const app = express();
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 4000;
+
+const path = require("path");
+
+// cors
+const cors = require("cors");
+// allow cors
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 // allow json payloads
-app.use(express.json);
+app.use(express.json());
 
 // connect with DB
 connectDB();
 
+// home
+app.use("/", express.static(path.join(__dirname, "public")));
+
+app.use("/", require("./routes/root"));
 // handle reqs
 app.use("/api/auth", require("./routes/authRoute"));
+app.use("/api/shortit", require("./routes/shortRoute"));
 
 mongoose.connection.once("open", () => {
   console.log("Connected to mongoDB Server ☑️");
   app.listen(PORT, () => {
-    console.log("Server is listening on PORT ", PORT, " 🚀");
+    console.log("Server is listening on PORT", PORT, "🚀");
   });
 });
 
