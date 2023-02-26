@@ -5,7 +5,7 @@ const generateShortLink = () => {
   if (rnd < 10) {
     rnd += 10;
   }
-  console.log(rnd);
+
   var str1 = rnd.toString()[0];
   var str2 = rnd.toString()[1];
   const uid = new ShortUniqueId({ length: 3 });

@@ -5,7 +5,7 @@ const shortSchema = new mongoose.Schema(
     longUrl: { type: String, required: true },
     shortUrl: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    createdAt: { type: Date, expires: "1d", default: Date.now },
+    // activeFrom: { type: Date, default: Date.now, expires: "2m" },
   },
   { timestamps: true }
 );

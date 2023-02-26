@@ -11,27 +11,31 @@ router.post("/", verifyJWT, async (req, res) => {
     return res.status(400).json({ message: "Url is required!" });
   }
   try {
-    const link = await Short.findOne({ longUrl: req.body.url }).exec();
-    if (link) {
+    const links = await Short.find({ longUrl: req.body.url }).exec();
+    console.log(links);
+    if (links?.length) {
       // if link already exists for that user
-      if (link.user == req.user.id) {
-        res.status(400).json({
-          message: "Short link already exists for the url for the user",
-        });
-      } else {
-        // else link exists but not for that user so generate link
-        var shortLink = "http://localhost:4000/" + generateShortLink();
-        // save to the DB
-        const newLink = {
-          longUrl: req.body.url,
-          shortUrl: shortLink,
-          user: req.user.id,
-        };
-        const res = await Short.create(newLink);
-        return res
-          .status(201)
-          .json({ message: "link successfully generated", data: res });
+      for (const link of links) {
+        if (link.user == req.user.id) {
+          return res.status(400).json({
+            message: "Short link already exists for the url for the user",
+          });
+        }
       }
+
+      // else link exists but not for that user so generate link
+      var shortLink = "http://localhost:4000/" + generateShortLink();
+      // save to the DB
+      const newLink = {
+        longUrl: req.body.url,
+        shortUrl: shortLink,
+        user: req.user.id,
+      };
+      const resp = await Short.create(newLink);
+
+      res
+        .status(201)
+        .json({ message: "link successfully generated", data: resp });
     } else {
       // if the longUrl doesn't exists create one
       var shortLink = "http://localhost:4000/" + generateShortLink();
@@ -41,9 +45,11 @@ router.post("/", verifyJWT, async (req, res) => {
         user: req.user.id,
       };
       const resp = await Short.create(newLink);
-      return res
-        .status(201)
-        .json({ message: "link successfully generated", data: resp });
+      const { longUrl, shortUrl } = resp;
+      return res.status(201).json({
+        message: "link successfully generated 2",
+        data: { shortUrl, longUrl },
+      });
     }
   } catch (err) {
     console.log(err);

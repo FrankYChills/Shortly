@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 router.post("/register", async (req, res) => {
-  console.log("got here");
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: "All Fields are required!" });
   }
@@ -23,6 +22,7 @@ router.post("/register", async (req, res) => {
 
   try {
     const user = await User.create(newUser);
+
     res.status(201).json({ message: "User created succesfully!" });
   } catch (err) {
     console.log(err);
@@ -36,6 +36,7 @@ router.post("/login", async (req, res) => {
   }
   try {
     const user = await User.findOne({ username: req.body.username }).exec();
+
     if (!user) {
       return res.status(400).json({ message: "User doesn't exists!" });
     }
