@@ -26,14 +26,14 @@ app.use(express.json());
 // connect with DB
 connectDB();
 
-// home
 app.use("/", express.static(path.join(__dirname, "public")));
 
+// handle requests via routers
 app.use("/", require("./routes/root"));
-// handle reqs
 app.use("/api/auth", require("./routes/authRoute"));
 app.use("/api/shortit", require("./routes/shortRoute"));
 
+// listen after app gets connected with mongodb server
 mongoose.connection.once("open", () => {
   console.log("Connected to mongoDB Server ☑️");
   app.listen(PORT, () => {

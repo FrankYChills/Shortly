@@ -1,11 +1,19 @@
 const jwt = require("jsonwebtoken");
 
+/**
+ * This function is an middleware that checks if a valid JWT token is present in an user request for authorization purpose.
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @returns None
+ */
 const verifyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
 
   if (!authHeader) {
     return res.status(401).json({ message: "UnAuthorized access!" });
   }
+  // autorization value should start with Bearer
   if (!authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Invalid token format" });
   }
@@ -21,6 +29,7 @@ const verifyJWT = (req, res, next) => {
     }
     // get user from decoded jwt
     req.user = decoded;
+    // pass to next function
     next();
   });
 };
