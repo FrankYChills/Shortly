@@ -21,6 +21,13 @@ router.get("/:short", async (req, res) => {
       return res.status(400).json({ message: "Invalid Short URL!" });
     }
     // redirect to the original/long url
+    // user accessed the url so update the activeFrom field so that expiry time increases
+
+    await Short.findOneAndUpdate(
+      { shortUrl: longLink.shortUrl },
+
+      { $set: { activeFrom: Date.now() } }
+    );
 
     res.redirect(longLink.longUrl);
   } catch (err) {

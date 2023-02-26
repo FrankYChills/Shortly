@@ -12,7 +12,7 @@ router.post("/", verifyJWT, async (req, res) => {
   }
   try {
     const links = await Short.find({ longUrl: req.body.url }).exec();
-    console.log(links);
+
     if (links?.length) {
       // if link already exists for that user
       for (const link of links) {
@@ -32,10 +32,13 @@ router.post("/", verifyJWT, async (req, res) => {
         user: req.user.id,
       };
       const resp = await Short.create(newLink);
-
+      const { longUrl, shortUrl } = resp;
       res
         .status(201)
-        .json({ message: "link successfully generated", data: resp });
+        .json({
+          message: "link successfully generated",
+          data: { shortUrl, longUrl },
+        });
     } else {
       // if the longUrl doesn't exists create one
       var shortLink = "http://localhost:4000/" + generateShortLink();
@@ -47,7 +50,7 @@ router.post("/", verifyJWT, async (req, res) => {
       const resp = await Short.create(newLink);
       const { longUrl, shortUrl } = resp;
       return res.status(201).json({
-        message: "link successfully generated 2",
+        message: "link successfully generated",
         data: { shortUrl, longUrl },
       });
     }
