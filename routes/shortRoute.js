@@ -12,7 +12,7 @@ const generateShortLink = require("../shorten");
 /**
  * ROUTE - "/api/shortit/"
  * METHOD - POST
- * This methods handles the request for shorting the URLs.
+ * This methods handles the request for shorting the URLs.JWT required.
  */
 router.post("/", verifyJWT, async (req, res) => {
   // if no url is passed

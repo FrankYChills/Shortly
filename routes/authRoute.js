@@ -15,6 +15,11 @@ router.post("/register", async (req, res) => {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: "All Fields are required!" });
   }
+  if (typeof username != "string" || typeof password != "string") {
+    return res
+      .status(400)
+      .json({ message: "username or password must be of type string" });
+  }
   // check if user already exists
   const user = await User.findOne({ username: req.body.username }).exec();
   if (user) {
@@ -48,6 +53,11 @@ router.post("/login", async (req, res) => {
   // check for all fields
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: "All Fields are required!" });
+  }
+  if (typeof username != "string" || typeof password != "string") {
+    return res
+      .status(400)
+      .json({ message: "username or password must be of type string" });
   }
   try {
     // check if user doesn't exists
