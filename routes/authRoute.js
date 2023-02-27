@@ -15,7 +15,10 @@ router.post("/register", async (req, res) => {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: "All Fields are required!" });
   }
-  if (typeof username != "string" || typeof password != "string") {
+  if (
+    typeof req.body.username != "string" ||
+    typeof req.body.password != "string"
+  ) {
     return res
       .status(400)
       .json({ message: "username or password must be of type string" });
@@ -54,7 +57,10 @@ router.post("/login", async (req, res) => {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: "All Fields are required!" });
   }
-  if (typeof username != "string" || typeof password != "string") {
+  if (
+    typeof req.body.username != "string" ||
+    typeof req.body.password != "string"
+  ) {
     return res
       .status(400)
       .json({ message: "username or password must be of type string" });
