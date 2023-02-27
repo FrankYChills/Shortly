@@ -2,15 +2,15 @@
 
 > Shortly API is a web service to generate short link from given long link.
 
-> ### The app is deployed live at -> https://shortly-e4xw.onrender.com
+> #### The app is deployed live at -> https://shortly-e4xw.onrender.com
 
 ## Features
 
-> ### 1. User Authentication and Authorization.
+> #### 1. User Authentication and Authorization.
 
-> ### 2. Any User can store a shortened url for max of 30 days. The storage time will increase on the access of that shortened url.
+> #### 2. Any User can store a shortened url for max of 30 days. The storage time will increase on the access of that shortened url.
 
-> ### 3. All the shortened urls will be unique.
+> #### 3. All the shortened urls will be unique.
 
 ## How it Works
 

@@ -18,3 +18,10 @@ body {
   place-content: center;
   padding: 1rem;
 }
+
+a {
+  color: whitesmoke;
+}
+a:hover {
+  color: green;
+}
