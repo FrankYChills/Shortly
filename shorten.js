@@ -3,7 +3,7 @@ const ShortUniqueId = require("short-unique-id");
 /**
  * This Function generates an unique string of length 5
  * @param  {None} No param required
- * @return {String}  Unique Shorter link
+ * @return {String}  Unique Short string
  */
 const generateShortLink = () => {
   var rnd = Math.floor(Math.random() * 100);
